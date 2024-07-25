@@ -1,4 +1,4 @@
-module github.com/china-li-shuo/shop_proto
+module github.com/z-zheng-y/shop_proto
 
 go 1.20
 
