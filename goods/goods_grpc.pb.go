@@ -24,6 +24,7 @@ const (
 	Goods_GoodsList_FullMethodName            = "/Goods/GoodsList"
 	Goods_BatchGetGoods_FullMethodName        = "/Goods/BatchGetGoods"
 	Goods_CreateGoods_FullMethodName          = "/Goods/CreateGoods"
+	Goods_DeleteGoods_FullMethodName          = "/Goods/DeleteGoods"
 	Goods_UpdateGoods_FullMethodName          = "/Goods/UpdateGoods"
 	Goods_GetGoodsDetail_FullMethodName       = "/Goods/GetGoodsDetail"
 	Goods_GetAllCategoryList_FullMethodName   = "/Goods/GetAllCategoryList"
@@ -57,6 +58,8 @@ type GoodsClient interface {
 	BatchGetGoods(ctx context.Context, in *BatchGoodsIdInfo, opts ...grpc.CallOption) (*GoodsListResponse, error)
 	// 创建商品
 	CreateGoods(ctx context.Context, in *CreateGoodsInfo, opts ...grpc.CallOption) (*GoodsInfoResponse, error)
+	// 删除分类
+	DeleteGoods(ctx context.Context, in *DeleteGoodsRequest, opts ...grpc.CallOption) (*Empty, error)
 	// 修改商品
 	UpdateGoods(ctx context.Context, in *CreateGoodsInfo, opts ...grpc.CallOption) (*Empty, error)
 	// 商品详情
@@ -132,6 +135,15 @@ func (c *goodsClient) BatchGetGoods(ctx context.Context, in *BatchGoodsIdInfo, o
 func (c *goodsClient) CreateGoods(ctx context.Context, in *CreateGoodsInfo, opts ...grpc.CallOption) (*GoodsInfoResponse, error) {
 	out := new(GoodsInfoResponse)
 	err := c.cc.Invoke(ctx, Goods_CreateGoods_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *goodsClient) DeleteGoods(ctx context.Context, in *DeleteGoodsRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Goods_DeleteGoods_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -329,6 +341,8 @@ type GoodsServer interface {
 	BatchGetGoods(context.Context, *BatchGoodsIdInfo) (*GoodsListResponse, error)
 	// 创建商品
 	CreateGoods(context.Context, *CreateGoodsInfo) (*GoodsInfoResponse, error)
+	// 删除分类
+	DeleteGoods(context.Context, *DeleteGoodsRequest) (*Empty, error)
 	// 修改商品
 	UpdateGoods(context.Context, *CreateGoodsInfo) (*Empty, error)
 	// 商品详情
@@ -388,6 +402,9 @@ func (UnimplementedGoodsServer) BatchGetGoods(context.Context, *BatchGoodsIdInfo
 }
 func (UnimplementedGoodsServer) CreateGoods(context.Context, *CreateGoodsInfo) (*GoodsInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGoods not implemented")
+}
+func (UnimplementedGoodsServer) DeleteGoods(context.Context, *DeleteGoodsRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGoods not implemented")
 }
 func (UnimplementedGoodsServer) UpdateGoods(context.Context, *CreateGoodsInfo) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoods not implemented")
@@ -512,6 +529,24 @@ func _Goods_CreateGoods_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GoodsServer).CreateGoods(ctx, req.(*CreateGoodsInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Goods_DeleteGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGoodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoodsServer).DeleteGoods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Goods_DeleteGoods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoodsServer).DeleteGoods(ctx, req.(*DeleteGoodsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -894,6 +929,10 @@ var Goods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateGoods",
 			Handler:    _Goods_CreateGoods_Handler,
+		},
+		{
+			MethodName: "DeleteGoods",
+			Handler:    _Goods_DeleteGoods_Handler,
 		},
 		{
 			MethodName: "UpdateGoods",

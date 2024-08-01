@@ -17,6 +17,9 @@ service Goods {
   //创建商品
   rpc CreateGoods(CreateGoodsInfo) returns (GoodsInfoResponse);
 
+  //删除分类
+  rpc DeleteGoods(DeleteGoodsRequest) returns(Empty);
+
   //修改商品
   rpc UpdateGoods(CreateGoodsInfo) returns (Empty);
 
@@ -81,7 +84,7 @@ message GoodsFilterRequest  {
   bool isHot = 3; //是否是热门
   bool  isNew = 4; //是否是新品
   bool  isTab = 5; //是否是分类选项
-  bool topCategory = 6; //是否是顶级分类
+  int32 topCategory = 6; //是否是顶级分类
   int32 pages = 7; //页码
   int32 pagePerNums = 8; //每页显示条数
   string keyWords = 9; //关键字
@@ -130,6 +133,10 @@ message BrandInfoResponse {
   int32 id = 1;
   string name = 2;
   string logo = 3;
+}
+//多件商品的id
+message DeleteGoodsRequest{
+  repeated int32 id = 1;
 }
 
 //多件商品的id
