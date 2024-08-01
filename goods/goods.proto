@@ -4,7 +4,7 @@ syntax = "proto3";
 // 生成 golang 代码后的包名 新版本的protoc和protobuf这里应该写成 option go_package = "./;proto";
 option go_package = ".;goods_pb";
 
-
+//版本v0.0.4的提交 对topCategory类型的修改
 // 定义商品服务
 service Goods {
   //商品列表
