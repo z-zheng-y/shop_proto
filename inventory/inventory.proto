@@ -1,0 +1,24 @@
+syntax="proto3";
+
+option go_package="./;proto";
+
+service Inventory{
+    rpc SetInv(GoodsInvInfo)returns(Empty);
+    rpc InvDetail(GoodsInvInfo)returns(SellInfo);
+    rpc Sell(SellInfo)returns(Empty);
+    rpc ReBack(SellInfo)returns(Empty);
+}
+
+message Empty{
+}
+
+
+message GoodsInvInfo{
+  int32  goodsId = 1;
+  int32 num = 2;
+}
+
+message SellInfo{
+  repeated  GoodsInvInfo goodsInfo = 1;
+  string orderSn = 2;
+}
