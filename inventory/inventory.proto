@@ -6,7 +6,7 @@ option go_package="./;proto";
 
 service Inventory{
     rpc SetInv(GoodsInvInfo)returns(google.protobuf.Empty);
-    rpc InvDetail(GoodsInvInfo)returns(SellInfo);
+    rpc InvDetail(GoodsInvInfo)returns(GoodsInvInfo);
     rpc Sell(SellInfo)returns(google.protobuf.Empty);
     rpc ReBack(SellInfo)returns(google.protobuf.Empty);
 }

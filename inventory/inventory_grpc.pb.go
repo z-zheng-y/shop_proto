@@ -31,7 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InventoryClient interface {
 	SetInv(ctx context.Context, in *GoodsInvInfo, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	InvDetail(ctx context.Context, in *GoodsInvInfo, opts ...grpc.CallOption) (*SellInfo, error)
+	InvDetail(ctx context.Context, in *GoodsInvInfo, opts ...grpc.CallOption) (*GoodsInvInfo, error)
 	Sell(ctx context.Context, in *SellInfo, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ReBack(ctx context.Context, in *SellInfo, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -54,9 +54,9 @@ func (c *inventoryClient) SetInv(ctx context.Context, in *GoodsInvInfo, opts ...
 	return out, nil
 }
 
-func (c *inventoryClient) InvDetail(ctx context.Context, in *GoodsInvInfo, opts ...grpc.CallOption) (*SellInfo, error) {
+func (c *inventoryClient) InvDetail(ctx context.Context, in *GoodsInvInfo, opts ...grpc.CallOption) (*GoodsInvInfo, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SellInfo)
+	out := new(GoodsInvInfo)
 	err := c.cc.Invoke(ctx, Inventory_InvDetail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *inventoryClient) ReBack(ctx context.Context, in *SellInfo, opts ...grpc
 // for forward compatibility
 type InventoryServer interface {
 	SetInv(context.Context, *GoodsInvInfo) (*emptypb.Empty, error)
-	InvDetail(context.Context, *GoodsInvInfo) (*SellInfo, error)
+	InvDetail(context.Context, *GoodsInvInfo) (*GoodsInvInfo, error)
 	Sell(context.Context, *SellInfo) (*emptypb.Empty, error)
 	ReBack(context.Context, *SellInfo) (*emptypb.Empty, error)
 	mustEmbedUnimplementedInventoryServer()
@@ -102,7 +102,7 @@ type UnimplementedInventoryServer struct {
 func (UnimplementedInventoryServer) SetInv(context.Context, *GoodsInvInfo) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetInv not implemented")
 }
-func (UnimplementedInventoryServer) InvDetail(context.Context, *GoodsInvInfo) (*SellInfo, error) {
+func (UnimplementedInventoryServer) InvDetail(context.Context, *GoodsInvInfo) (*GoodsInvInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvDetail not implemented")
 }
 func (UnimplementedInventoryServer) Sell(context.Context, *SellInfo) (*emptypb.Empty, error) {
