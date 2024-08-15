@@ -1,6 +1,8 @@
 // 声明 proto 语法版本，固定值
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 // 生成 golang 代码后的包名 新版本的protoc和protobuf这里应该写成 option go_package = "./;proto";
 option go_package = ".;user_pb";
 
@@ -16,11 +18,9 @@ service User {
   // 定义一个 CreateUser 创建用户
   rpc CreateUser(CreateUserInfo) returns (UserInfoResponse);
   // 定义一个 UpdateUser 更新用户
-  rpc UpdateUser(UpdateUserInfo) returns (Empty);
+  rpc UpdateUser(UpdateUserInfo) returns (google.protobuf.Empty);
 
 }
-
-message Empty {}
 
 // 定义GetUserList 方法请求体
 message PageInfo {

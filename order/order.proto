@@ -1,5 +1,7 @@
 syntax="proto3";
 
+import "google/protobuf/empty.proto";
+
 option go_package="./;proto";
 
 //定义订单服务
@@ -7,15 +9,14 @@ service Order {
   //购物车
   rpc CartItemList(UserInfo)returns(CartItemListResponse);
   rpc CreateCartItem(CartItemRequest)returns(ShopCarInfoResponse);
-  rpc UpdateCartItem(CartItemRequest)returns(Empty);
+  rpc UpdateCartItem(CartItemRequest)returns(google.protobuf.Empty);
 
   //订单
   rpc Create(OrderRequest)returns(OrderInfoResponse);
   rpc OrderList(OrderFilterRequest)returns(OrderListResponse);
   rpc OrderDetail(OrderRequest)returns(OrderInfoDetailResponse);
-  rpc UpdateOrder(UpdateOrderInfo)returns(Empty);
+  rpc UpdateOrder(UpdateOrderInfo)returns(google.protobuf.Empty);
 }
-message Empty{}
 
 //用户信息
 message UserInfo{
