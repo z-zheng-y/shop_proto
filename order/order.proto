@@ -91,7 +91,7 @@ message OrderFilterRequest{
 //订单列表
 message OrderListResponse{
   int32 total = 1;
-  repeated OrderFilterRequest data = 2;
+  repeated OrderInfoResponse data = 2;
 }
 
 
