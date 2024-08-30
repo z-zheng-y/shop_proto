@@ -8,6 +8,9 @@ service Inventory{
     rpc SetInv(GoodsInvInfo)returns(google.protobuf.Empty);
     rpc InvDetail(GoodsInvInfo)returns(GoodsInvInfo);
     rpc Sell(SellInfo)returns(google.protobuf.Empty);
+    rpc TrySell(SellInfo)returns(google.protobuf.Empty);
+    rpc ConfirmSell(SellInfo)returns(google.protobuf.Empty);
+    rpc ReSell(SellInfo)returns(google.protobuf.Empty);
     rpc ReBack(SellInfo)returns(google.protobuf.Empty);
 }
 
